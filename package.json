@@ -1,0 +1,1 @@
+{"name":"mi-plan-alimentario","version":"1.0.0","private":true,"description":"Aplicación personal de alimentación con cuentas y datos privados","scripts":{"start":"node server.js","test":"node --test"},"engines":{"node":">=20"}}
