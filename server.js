@@ -1,8 +1,7 @@
 'use strict';
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const PORT=Number(process.env.PORT||3000),ROOT=__dirname,DATA_DIR=path.resolve(process.env.DATA_DIR||path.join(ROOT,'data'));
-const DB=path.join(DATA_DIR,'store.json'),STATIC=path.join(ROOT,'public');fs.mkdirSync(DATA_DIR,{recursive:true});
-let db={users:{},sessions:{}};try{const x=JSON.parse(fs.readFileSync(DB,'utf8'));if(x.users&&x.sessions)db=x;}catch(e){if(e.code!=='ENOENT')console.warn('No se pudo cargar el almacén:',e.message);}
+const DB=path.join(DATA_DIR,'store.json'),STATIC=ROOT;fs.mkdirSync(DATA_DIR,{recursive:true});let db={users:{},sessions:{}};try{const x=JSON.parse(fs.readFileSync(DB,'utf8'));if(x.users&&x.sessions)db=x;}catch(e){if(e.code!=='ENOENT')console.warn('No se pudo cargar el almacén:',e.message);}
 const now=()=>Date.now(),uid=()=>crypto.randomUUID(),safe=s=>String(s??'').trim(),has=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 function save(){const tmp=DB+'.tmp';fs.writeFileSync(tmp,JSON.stringify(db),{mode:0o600});fs.renameSync(tmp,DB);}
 function error(msg,status=400){return Object.assign(new Error(msg),{status});}
